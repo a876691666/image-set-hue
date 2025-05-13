@@ -111,18 +111,28 @@ runCommand('npm publish', '发布npm包失败');
 
 // 更新package.json中的依赖版本
 console.log('\n更新依赖版本...');
-packageJson.dependencies['vue-api-request-builder'] = `^${newVersion}`;
-fs.writeFileSync(
-  path.join(rootDir, 'package.json'),
-  JSON.stringify(packageJson, null, 2) + '\n',
-  'utf8'
-);
+const packageName = packageJson.name;
+if (packageJson.dependencies && packageJson.dependencies[packageName]) {
+  packageJson.dependencies[packageName] = `^${newVersion}`;
+  fs.writeFileSync(
+    path.join(rootDir, 'package.json'),
+    JSON.stringify(packageJson, null, 2) + '\n',
+    'utf8'
+  );
+  console.log(`已更新依赖 ${packageName} 的版本为 ^${newVersion}`);
+} else {
+  console.log(`跳过依赖更新：package.json 中不存在依赖 ${packageName}`);
+}
 
 // 提交依赖版本更新
 console.log('\n提交依赖版本更新...');
-runCommand('git add package.json', '添加package.json到暂存区失败');
-runCommand(`git commit -m "chore: update vue-api-request-builder to v${newVersion}"`, '提交依赖版本更新失败');
-runCommand('git push', '推送依赖版本更新失败');
+if (packageJson.dependencies && packageJson.dependencies[packageName]) {
+  runCommand('git add package.json', '添加package.json到暂存区失败');
+  runCommand(`git commit -m "chore: update ${packageName} to v${newVersion}"`, '提交依赖版本更新失败');
+  runCommand('git push', '推送依赖版本更新失败');
+} else {
+  console.log('跳过提交：没有依赖需要更新');
+}
 
 console.log(`\n🎉 成功发布版本 v${newVersion}!`);
 console.log('GitHub Pages内容已更新，请在GitHub仓库设置中确保已启用GitHub Pages');

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Hue Adjustment</title>
+    <script type="module" crossorigin src="/assets/index-DtJE9JPm.js"></script>
+  </head>
+  <body>
+    <h1>Image Hue Adjustment</h1>
+    <p id="status" style="color: green; font-weight: bold"></p>
+    <div id="timeOutputs">
+      <p id="time1" style="color: blue; font-weight: bold"></p>
+      <p id="time2" style="color: blue; font-weight: bold"></p>
+      <p id="time3" style="color: blue; font-weight: bold"></p>
+      <p id="time4" style="color: blue; font-weight: bold"></p>
+      <p id="time5" style="color: blue; font-weight: bold"></p>
+    </div>
+    <input type="file" id="imageInput" accept="image/*" />
+    <div id="colorInputs">
+      <input type="color" id="colorInput1" value="#ff0000" />
+      <input type="color" id="colorInput2" value="#00ff00" />
+      <input type="color" id="colorInput3" value="#0000ff" />
+      <input type="color" id="colorInput4" value="#ffff00" />
+      <input type="color" id="colorInput5" value="#ff00ff" />
+    </div>
+    <button id="processButton">Process Image</button>
+    <br />
+    <img
+      id="inputPreview"
+      style="border: 1px solid black; margin-top: 10px; width: 600px; display: none"
+      alt="Input Preview"
+    />
+
+  </body>
+</html>
