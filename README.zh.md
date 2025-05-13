@@ -2,6 +2,8 @@
 
 这是一个基于 Vite 的 TypeScript 库项目。它提供了一个柯里化函数，用于处理图像，将图像的 RGB 颜色转换为 HUE，并将所有色相调整为匹配给定的目标色相。
 
+![示例图片](static/image.png)
+
 [English Documentation](README.md)
 
 ## 功能特点
@@ -71,8 +73,8 @@ const resultBlob = await processWithHue(targetHue);
 以下是图像处理工作流程的简化流程图：
 
 ```mermaid
-graph TD
-    A[输入图像 (Blob 或 BlobUrl)] --> B[加载图像到 HTMLImageElement]
+flowchart TD
+    A[输入图像 Blob/BlobUrl] --> B[加载图像到 HTMLImageElement]
     B --> C[初始化 WebGL 上下文]
     C --> D[准备着色器]
     D --> E[计算目标色相]

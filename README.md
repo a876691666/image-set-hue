@@ -2,6 +2,7 @@
 
 This project is a Vite-based library written in TypeScript. It provides a curried function to process images by converting their RGB colors to HUE and adjusting all hues to match a given target hue.
 
+![Example Image](static/image.png)
 
 [中文文档](README_zh.md)
 
@@ -72,8 +73,8 @@ const resultBlob = await processWithHue(targetHue);
 Below is a simplified flowchart of the image processing workflow:
 
 ```mermaid
-graph TD
-    A[Input Image (Blob or BlobUrl)] --> B[Load Image into HTMLImageElement]
+flowchart TD
+    A[Input Image Blob/BlobUrl] --> B[Load Image to HTMLImageElement]
     B --> C[Initialize WebGL Context]
     C --> D[Prepare Shaders]
     D --> E[Calculate Target Hue]
@@ -81,4 +82,3 @@ graph TD
     F --> G[Process Image with Shaders]
     G --> H[Convert Canvas to Blob]
     H --> I[Output Processed Image Blob]
-```
