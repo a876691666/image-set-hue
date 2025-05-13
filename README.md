@@ -4,7 +4,7 @@ This project is a Vite-based library written in TypeScript. It provides a currie
 
 ![Example Image](static/image.png)
 
-[中文文档](README_zh.md)
+[中文文档](README.zh.md)
 
 ## Features
 
@@ -35,23 +35,33 @@ This project is a Vite-based library written in TypeScript. It provides a currie
 
 ## Installation
 
-Install the dependencies using npm:
+You can install the package from npm:
 
 ```bash
-npm install
+npm install image-set-hue
+```
+
+Or if you are using yarn:
+
+```bash
+yarn add image-set-hue
 ```
 
 ## Development
 
-To start the development server:
+If you want to contribute or modify the library, you can clone the repository and:
 
 ```bash
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
 ```
 
 ## Build
 
-To build the library:
+To build the library locally:
 
 ```bash
 npm run build
@@ -62,10 +72,27 @@ npm run build
 Import the library and use the provided function to process images:
 
 ```typescript
-import { processImage } from 'your-library';
+import { processImage } from 'image-set-hue';
 
-const processWithHue = processImage(blobOrBlobUrl);
-const resultBlob = await processWithHue(targetHue);
+// Example 1: Process an image with a specific color
+const imageBlob = await fetch('/path/to/image.jpg').then(res => res.blob());
+const processWithHue = processImage(imageBlob);
+const resultBlob = await processWithHue('#9370DB'); // Using a purple color
+
+// Example 2: Using with file input
+document.getElementById('fileInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  const processWithHue = processImage(file);
+  const result = await processWithHue('#FF5733'); // Using an orange color
+  
+  // Display the processed image
+  const imgElement = document.getElementById('outputImage');
+  imgElement.src = URL.createObjectURL(result);
+});
+
+// Example 3: Process with URL
+const processWithUrl = processImage('https://example.com/image.jpg');
+const processed = await processWithUrl('rgb(100, 150, 200)'); // Using RGB format
 ```
 
 ## Workflow Diagram
@@ -82,3 +109,40 @@ flowchart TD
     F --> G[Process Image with Shaders]
     G --> H[Convert Canvas to Blob]
     H --> I[Output Processed Image Blob]
+```
+
+## Technical Details
+
+### Curried Function Design
+
+The library uses a curried function design pattern, which divides image loading and processing into two stages:
+
+1. The first stage receives the input image and creates the processing context.
+2. The second stage receives the target hue and performs the actual processing.
+
+This design allows you to load an image once and then process it multiple times with different hues without reloading the image.
+
+### WebGL Shaders
+
+Image processing is implemented using WebGL shaders to achieve efficient parallel computation:
+
+- **Vertex Shader**: Defines image coordinates and texture mapping.
+- **Fragment Shader**: Implements RGB to HSL conversion, hue adjustment, and HSL to RGB conversion.
+
+### Performance Optimizations
+
+To enhance performance, the library implements the following optimizations:
+
+1. **Image Caching**: Once loaded, images are cached to avoid repeated loading.
+2. **WebGL Hardware Acceleration**: Utilizes GPU for parallel color calculations.
+3. **Single-Pass Processing**: All color conversions and adjustments are done in a single shader pass.
+
+## Browser Compatibility
+
+The library is compatible with all modern browsers that support WebGL, including:
+
+- Chrome 9+
+- Firefox 4+
+- Safari 5.1+
+- Edge 12+
+- Opera 12+

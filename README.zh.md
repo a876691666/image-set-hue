@@ -1,4 +1,4 @@
-# Vite 库项目
+# Image Set Hue
 
 这是一个基于 Vite 的 TypeScript 库项目。它提供了一个柯里化函数，用于处理图像，将图像的 RGB 颜色转换为 HUE，并将所有色相调整为匹配给定的目标色相。
 
@@ -35,23 +35,33 @@
 
 ## 安装
 
-使用 npm 安装依赖：
+您可以通过npm安装该包：
 
 ```bash
-npm install
+npm install image-set-hue
+```
+
+或者如果您使用yarn：
+
+```bash
+yarn add image-set-hue
 ```
 
 ## 开发
 
-启动开发服务器：
+如果您想贡献或修改该库，您可以克隆存储库并执行：
 
 ```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
 npm run dev
 ```
 
 ## 构建
 
-构建库：
+要在本地构建该库：
 
 ```bash
 npm run build
@@ -62,10 +72,27 @@ npm run build
 导入库并使用提供的函数处理图像：
 
 ```typescript
-import { processImage } from 'your-library';
+import { processImage } from 'image-set-hue';
 
-const processWithHue = processImage(blobOrBlobUrl);
-const resultBlob = await processWithHue(targetHue);
+// 示例1：使用特定颜色处理图像
+const imageBlob = await fetch('/path/to/image.jpg').then(res => res.blob());
+const processWithHue = processImage(imageBlob);
+const resultBlob = await processWithHue('#9370DB'); // 使用紫色
+
+// 示例2：与文件输入一起使用
+document.getElementById('fileInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  const processWithHue = processImage(file);
+  const result = await processWithHue('#FF5733'); // 使用橙色
+  
+  // 显示处理后的图像
+  const imgElement = document.getElementById('outputImage');
+  imgElement.src = URL.createObjectURL(result);
+});
+
+// 示例3：使用URL进行处理
+const processWithUrl = processImage('https://example.com/image.jpg');
+const processed = await processWithUrl('rgb(100, 150, 200)'); // 使用RGB格式
 ```
 
 ## 工作流程图
