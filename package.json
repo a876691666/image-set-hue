@@ -24,6 +24,7 @@
     "vite-plugin-dts": "^4.5.3"
   },
   "dependencies": {
-    "d3-color": "^3.1.0"
+    "d3-color": "^3.1.0",
+    "vue-api-request-builder": "^1.0.1"
   }
 }
