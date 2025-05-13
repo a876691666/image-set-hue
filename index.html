@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Hue Adjustment</title>
+  </head>
+  <body>
+    <h1>Image Hue Adjustment</h1>
+    <p id="status" style="color: green; font-weight: bold"></p>
+    <div id="timeOutputs">
+      <p id="time1" style="color: blue; font-weight: bold"></p>
+      <p id="time2" style="color: blue; font-weight: bold"></p>
+      <p id="time3" style="color: blue; font-weight: bold"></p>
+      <p id="time4" style="color: blue; font-weight: bold"></p>
+      <p id="time5" style="color: blue; font-weight: bold"></p>
+    </div>
+    <input type="file" id="imageInput" accept="image/*" />
+    <div id="colorInputs">
+      <input type="color" id="colorInput1" value="#ff0000" />
+      <input type="color" id="colorInput2" value="#00ff00" />
+      <input type="color" id="colorInput3" value="#0000ff" />
+      <input type="color" id="colorInput4" value="#ffff00" />
+      <input type="color" id="colorInput5" value="#ff00ff" />
+    </div>
+    <button id="processButton">Process Image</button>
+    <br />
+    <img
+      id="inputPreview"
+      style="border: 1px solid black; margin-top: 10px; width: 600px; display: none"
+      alt="Input Preview"
+    />
+
+    <script type="module">
+      import { processImage } from "./src/processImage.js";
+
+      const imageInput = document.getElementById("imageInput");
+      const colorInputs = [
+        document.getElementById("colorInput1"),
+        document.getElementById("colorInput2"),
+        document.getElementById("colorInput3"),
+        document.getElementById("colorInput4"),
+        document.getElementById("colorInput5"),
+      ];
+      const processButton = document.getElementById("processButton");
+      const status = document.getElementById("status");
+      const inputPreview = document.getElementById("inputPreview");
+      const timeOutputs = [
+        document.getElementById("time1"),
+        document.getElementById("time2"),
+        document.getElementById("time3"),
+        document.getElementById("time4"),
+        document.getElementById("time5"),
+      ];
+
+      imageInput.addEventListener("change", () => {
+        const file = imageInput.files[0];
+        if (file) {
+          const imgUrl = URL.createObjectURL(file);
+          inputPreview.src = imgUrl;
+          inputPreview.style.display = "block";
+        } else {
+          inputPreview.style.display = "none";
+        }
+      });
+
+      processButton.addEventListener("click", async () => {
+        const file = imageInput.files[0];
+        const colorValues = colorInputs.map((input) => input.value);
+
+        if (!file) {
+          alert("Please select an image.");
+          return;
+        }
+
+        status.textContent = "Processing...";
+        timeOutputs.forEach((output) => (output.textContent = ""));
+
+        try {
+          const processWithHue = processImage(file);
+
+          for (let i = 0; i < colorValues.length; i++) {
+            const colorValue = colorValues[i];
+
+            const startTime = performance.now();
+            const resultBlob = await processWithHue(colorValue);
+            const endTime = performance.now();
+            timeOutputs[i].textContent = `Processing time: ${(endTime - startTime).toFixed(2)} ms`;
+
+            const img = new Image();
+            img.src = URL.createObjectURL(resultBlob);
+            img.style.border = "1px solid black";
+            img.style.marginTop = "10px";
+            img.style.width = "600px";
+            document.body.appendChild(img);
+
+            status.textContent = `Processing complete for color ${colorValue}!`;
+
+          }
+        } catch (error) {
+          status.textContent = "An error occurred during processing.";
+          console.error(error);
+        }
+      });
+    </script>
+  </body>
+</html>
