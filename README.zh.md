@@ -6,33 +6,6 @@
 
 [English Documentation](README.md)
 
-## 功能特点
-
-- **输入灵活性**：接受 Blob 或 BlobUrl 格式的图像。
-- **颜色转换**：将 RGB 颜色转换为 HUE。
-- **色相调整**：将所有色相调整为指定的目标色相。
-- **输出**：以 Blob 格式返回处理后的图像。
-
-## 工作原理
-
-1. **图像加载**：
-   - 输入图像（Blob 或 BlobUrl）被加载到 HTMLImageElement 中。
-   - 初始化 WebGL 上下文以处理图像。
-
-2. **着色器准备**：
-   - 创建顶点和片段着色器以处理图像。
-   - 片段着色器将 RGB 颜色转换为 HSL，调整色相，然后转换回 RGB。
-
-3. **色相计算**：
-   - 使用 `d3-color` 库从提供的目标颜色计算目标色相。
-
-4. **图像处理**：
-   - 图像绘制到 WebGL 画布上。
-   - 着色器处理图像以调整其色相。
-
-5. **输出生成**：
-   - 使用画布 API 将处理后的图像转换回 Blob。
-
 ## 安装
 
 您可以通过npm安装该包：
@@ -45,26 +18,6 @@ npm install image-set-hue
 
 ```bash
 yarn add image-set-hue
-```
-
-## 开发
-
-如果您想贡献或修改该库，您可以克隆存储库并执行：
-
-```bash
-# 安装依赖
-npm install
-
-# 启动开发服务器
-npm run dev
-```
-
-## 构建
-
-要在本地构建该库：
-
-```bash
-npm run build
 ```
 
 ## 使用方法
@@ -93,6 +46,53 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
 // 示例3：使用URL进行处理
 const processWithUrl = processImage('https://example.com/image.jpg');
 const processed = await processWithUrl('rgb(100, 150, 200)'); // 使用RGB格式
+```
+
+## 功能特点
+
+- **输入灵活性**：接受 Blob 或 BlobUrl 格式的图像。
+- **颜色转换**：将 RGB 颜色转换为 HUE。
+- **色相调整**：将所有色相调整为指定的目标色相。
+- **输出**：以 Blob 格式返回处理后的图像。
+
+## 工作原理
+
+1. **图像加载**：
+   - 输入图像（Blob 或 BlobUrl）被加载到 HTMLImageElement 中。
+   - 初始化 WebGL 上下文以处理图像。
+
+2. **着色器准备**：
+   - 创建顶点和片段着色器以处理图像。
+   - 片段着色器将 RGB 颜色转换为 HSL，调整色相，然后转换回 RGB。
+
+3. **色相计算**：
+   - 使用 `d3-color` 库从提供的目标颜色计算目标色相。
+
+4. **图像处理**：
+   - 图像绘制到 WebGL 画布上。
+   - 着色器处理图像以调整其色相。
+
+5. **输出生成**：
+   - 使用画布 API 将处理后的图像转换回 Blob。
+
+## 开发
+
+如果您想贡献或修改该库，您可以克隆存储库并执行：
+
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+```
+
+## 构建
+
+要在本地构建该库：
+
+```bash
+npm run build
 ```
 
 ## 工作流程图

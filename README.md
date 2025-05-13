@@ -2,36 +2,9 @@
 
 This project is a Vite-based library written in TypeScript. It provides a curried function to process images by converting their RGB colors to HUE and adjusting all hues to match a given target hue.
 
-![Example Image](static/image.png)
+![示例图片](static/image.png)
 
 [中文文档](README.zh.md)
-
-## Features
-
-- **Input Flexibility**: Accepts an image as a Blob or BlobUrl.
-- **Color Conversion**: Converts RGB colors to HUE.
-- **Hue Adjustment**: Adjusts all hues to a specified target hue.
-- **Output**: Returns the processed image as a Blob.
-
-## How It Works
-
-1. **Image Loading**:
-   - The input image (Blob or BlobUrl) is loaded into an HTMLImageElement.
-   - A WebGL context is initialized to process the image.
-
-2. **Shader Preparation**:
-   - Vertex and fragment shaders are created to handle the image processing.
-   - The fragment shader converts RGB colors to HSL, adjusts the hue, and converts back to RGB.
-
-3. **Hue Calculation**:
-   - The target hue is calculated from the provided target color using the `d3-color` library.
-
-4. **Image Processing**:
-   - The image is drawn onto a WebGL canvas.
-   - The shaders process the image to adjust its hues.
-
-5. **Output Generation**:
-   - The processed image is converted back to a Blob using the canvas API.
 
 ## Installation
 
@@ -45,26 +18,6 @@ Or if you are using yarn:
 
 ```bash
 yarn add image-set-hue
-```
-
-## Development
-
-If you want to contribute or modify the library, you can clone the repository and:
-
-```bash
-# Install dependencies
-npm install
-
-# Start the development server
-npm run dev
-```
-
-## Build
-
-To build the library locally:
-
-```bash
-npm run build
 ```
 
 ## Usage
@@ -93,6 +46,53 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
 // Example 3: Process with URL
 const processWithUrl = processImage('https://example.com/image.jpg');
 const processed = await processWithUrl('rgb(100, 150, 200)'); // Using RGB format
+```
+
+## Features
+
+- **Input Flexibility**: Accepts an image as a Blob or BlobUrl.
+- **Color Conversion**: Converts RGB colors to HUE.
+- **Hue Adjustment**: Adjusts all hues to a specified target hue.
+- **Output**: Returns the processed image as a Blob.
+
+## How It Works
+
+1. **Image Loading**:
+   - The input image (Blob or BlobUrl) is loaded into an HTMLImageElement.
+   - A WebGL context is initialized to process the image.
+
+2. **Shader Preparation**:
+   - Vertex and fragment shaders are created to handle the image processing.
+   - The fragment shader converts RGB colors to HSL, adjusts the hue, and converts back to RGB.
+
+3. **Hue Calculation**:
+   - The target hue is calculated from the provided target color using the `d3-color` library.
+
+4. **Image Processing**:
+   - The image is drawn onto a WebGL canvas.
+   - The shaders process the image to adjust its hues.
+
+5. **Output Generation**:
+   - The processed image is converted back to a Blob using the canvas API.
+
+## Development
+
+If you want to contribute or modify the library, you can clone the repository and:
+
+```bash
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+## Build
+
+To build the library locally:
+
+```bash
+npm run build
 ```
 
 ## Workflow Diagram
