@@ -25,6 +25,6 @@
   },
   "dependencies": {
     "d3-color": "^3.1.0",
-    "vue-api-request-builder": "^1.0.1"
+    "vue-api-request-builder": "^1.0.2"
   }
 }
